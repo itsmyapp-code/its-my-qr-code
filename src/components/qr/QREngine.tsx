@@ -125,19 +125,22 @@ export default function QREngine({ state }: QREngineProps) {
   const onDownloadClick = async (extension: Extension) => {
     if (!qrCode || !containerRef.current) return;
 
-    // If there's no label, we can use the library's built-in download
-    if (!state.labelText) {
-      qrCode.download({ extension });
+    // The library handles PNG, SVG, etc. but not always PDF reliably or included with our label
+    // If it's a standard format and NO label, use library's built-in download
+    // Note: We cast extension to any because the library types might vary
+    if (!state.labelText && extension !== 'pdf') {
+      qrCode.download({ extension: extension as any });
       return;
     }
 
-    // If there IS a label, we need to capture the container
+    // If there IS a label or it's a PDF, we use our custom capture logic
     try {
       const canvas = await html2canvas(containerRef.current, {
         backgroundColor: state.backgroundColor,
-        scale: 3, // High resolution
+        scale: 3, // High resolution for professional print
         logging: false,
-        useCORS: true
+        useCORS: true,
+        allowTaint: true
       });
 
       if (extension === 'png' || extension === 'jpeg' || extension === 'webp') {
@@ -155,14 +158,16 @@ export default function QREngine({ state }: QREngineProps) {
         pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
         pdf.save(`qrcode-${Date.now()}.pdf`);
       } else if (extension === 'svg') {
-        // SVG with text is complex to capture from canvas, 
-        // fallback to standard QR if it's SVG for now, or just PNG
-        qrCode.download({ extension });
+        // Fallback for SVG if label present - SVG to Canvas to SVG is lossy, 
+        // so we just download the QR as SVG for now
+        qrCode.download({ extension: 'svg' });
       }
     } catch (err) {
       console.error('Export failed:', err);
-      // Fallback
-      qrCode.download({ extension });
+      // Final fallback to whatever the library can do
+      if (extension !== 'pdf') {
+        qrCode.download({ extension: extension as any });
+      }
     }
   };
 
