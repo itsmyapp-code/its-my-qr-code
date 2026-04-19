@@ -10,10 +10,27 @@ export default function Home() {
             <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 bg-gradient-to-r from-zinc-900 to-zinc-500 dark:from-white dark:to-zinc-600 bg-clip-text text-transparent">
               Stunning QR Codes, <br />Generated Privately.
             </h1>
-            <p className="text-lg md:text-xl text-zinc-600 dark:text-zinc-400 leading-relaxed">
+            <p className="text-lg md:text-xl text-zinc-600 dark:text-zinc-400 leading-relaxed mb-10">
               Create professional, customizable QR codes with our 100% zero-backend engine. 
               No data tracking, no server uploads, and no hidden subscriptions.
             </p>
+            <div className="flex flex-wrap gap-4">
+              <a 
+                href="#generator" 
+                className="px-8 py-4 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 rounded-2xl font-bold hover:scale-105 transition-transform"
+              >
+                Start Generating
+              </a>
+              <a 
+                href="https://buy.stripe.com/6oU3cvgGfgZr11Y6urgYU01" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-800 rounded-2xl font-bold hover:scale-105 transition-transform"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-red-500 fill-red-500"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                Donate to developer
+              </a>
+            </div>
           </div>
         </div>
       </section>
