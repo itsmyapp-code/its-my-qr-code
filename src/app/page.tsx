@@ -79,9 +79,11 @@ export default function Home() {
                 Verified feedback from the creative community using our private QR tools.
               </p>
             </div>
-            <div className="flex items-center gap-2 px-4 py-2 bg-zinc-100 dark:bg-zinc-900 rounded-full border border-zinc-200 dark:border-zinc-800">
+     <div className="flex items-center gap-2 px-4 py-2 bg-zinc-100 dark:bg-zinc-900 rounded-full border border-zinc-200 dark:border-zinc-800">
               <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-              <span className="text-sm font-bold">4.9/5 Average Rating</span>
+              <span className="text-sm font-bold">
+                {(TESTIMONIALS.reduce((acc, t) => acc + t.stars, 0) / TESTIMONIALS.length).toFixed(1)}/5 Average Rating
+              </span>
             </div>
           </div>
 
