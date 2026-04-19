@@ -17,6 +17,7 @@ export function Footer() {
             <li><Link href="/privacy" className="hover:text-zinc-900 dark:hover:text-white transition-colors">Privacy Policy</Link></li>
             <li><Link href="/cookies" className="hover:text-zinc-900 dark:hover:text-white transition-colors">Cookie Policy</Link></li>
             <li><Link href="/accessibility" className="hover:text-zinc-900 dark:hover:text-white transition-colors">Accessibility Statement</Link></li>
+            <li><Link href="/help" className="hover:text-zinc-900 dark:hover:text-white transition-colors">User Guide & Help</Link></li>
           </ul>
         </div>
         <div>
