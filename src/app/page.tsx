@@ -22,7 +22,7 @@ export default function Home() {
                 Start Generating
               </a>
               <a 
-                href="https://buy.stripe.com/6oU3cvgGfgZr11Y6urgYU01" 
+                href="https://donate.stripe.com/cNiaEX4XxfVn5ieg51gYU02" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-8 py-4 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-800 rounded-2xl font-bold hover:scale-105 transition-transform"
