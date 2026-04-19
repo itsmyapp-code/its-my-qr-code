@@ -160,11 +160,34 @@ export default function QREngine({ state }: QREngineProps) {
         link.click();
       } else if (extension === 'pdf') {
         const pdf = new jsPDF({
-          orientation: containerRef.current.offsetWidth > containerRef.current.offsetHeight ? 'l' : 'p',
-          unit: 'px',
-          format: [containerRef.current.offsetWidth * 2, containerRef.current.offsetHeight * 2]
+          orientation: 'p',
+          unit: 'mm',
+          format: 'a4'
         });
-        pdf.addImage(dataUrl, 'PNG', 0, 0, containerRef.current.offsetWidth * 2, containerRef.current.offsetHeight * 2);
+        
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        
+        // Calculate dimensions to fit on A4 with margins
+        const margin = 20;
+        const maxWidth = pageWidth - (margin * 2);
+        const maxHeight = pageHeight - (margin * 2);
+        
+        const imgProps = pdf.getImageProperties(dataUrl);
+        const ratio = imgProps.width / imgProps.height;
+        
+        let width = maxWidth;
+        let height = width / ratio;
+        
+        if (height > maxHeight) {
+          height = maxHeight;
+          width = height * ratio;
+        }
+        
+        const x = (pageWidth - width) / 2;
+        const y = (pageHeight - height) / 2;
+        
+        pdf.addImage(dataUrl, 'PNG', x, y, width, height);
         pdf.save(`qrcode-${Date.now()}.pdf`);
       } else if (extension === 'svg') {
         // For SVG, the library's own SVG is better quality, 
