@@ -10,7 +10,7 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import QREngine, { QRState } from './QREngine';
-import { Link2, Type, Mail, Wifi, CreditCard, Palette, Shapes, Image as ImageIcon } from "lucide-react";
+import { Link2, Type, Mail, Wifi, CreditCard, Palette, Shapes, Image as ImageIcon, Type as TypeIcon } from "lucide-react";
 
 export default function QRDashboard() {
   const [qrState, setQrState] = useState<QRState>({
@@ -29,7 +29,9 @@ export default function QRDashboard() {
     backgroundGradientColor: '#f0f0f0',
     dotsGradient: false,
     dotsGradientColor: '#333333',
-    image: undefined
+    image: undefined,
+    labelText: '',
+    labelColor: '#000000'
   });
 
   const updateState = (updates: Partial<QRState>) => {
@@ -196,6 +198,7 @@ export default function QRDashboard() {
             <TabsTrigger value="colors" className="gap-2"><Palette className="w-4 h-4" /> Colors</TabsTrigger>
             <TabsTrigger value="shapes" className="gap-2"><Shapes className="w-4 h-4" /> Shapes</TabsTrigger>
             <TabsTrigger value="logo" className="gap-2"><ImageIcon className="w-4 h-4" /> Logo</TabsTrigger>
+            <TabsTrigger value="label" className="gap-2"><TypeIcon className="w-4 h-4" /> Label</TabsTrigger>
           </TabsList>
 
           {/* COLORS TAB */}
@@ -345,6 +348,43 @@ export default function QRDashboard() {
                   )}
                 </div>
                 <p className="text-xs text-zinc-500">Logo will be automatically centered. Transparency is supported.</p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* LABEL TAB */}
+          <TabsContent value="label" className="mt-4">
+            <Card className="rounded-3xl border-zinc-200 dark:border-zinc-800 overflow-hidden">
+              <CardContent className="p-6 space-y-6">
+                <div className="space-y-4">
+                  <Label htmlFor="label-text" className="font-semibold">Text Below QR Code</Label>
+                  <Input 
+                    id="label-text" 
+                    placeholder="e.g. Scan Here for WiFi" 
+                    value={qrState.labelText || ''}
+                    onChange={(e) => updateState({ labelText: e.target.value })}
+                    className="rounded-xl h-12"
+                  />
+                  <p className="text-xs text-zinc-500">Add a call to action below your QR code.</p>
+                </div>
+                
+                <div className="space-y-4">
+                  <Label className="font-semibold">Label Color</Label>
+                  <div className="flex gap-4">
+                    <Input 
+                      type="color" 
+                      value={qrState.labelColor || '#000000'}
+                      onChange={(e) => updateState({ labelColor: e.target.value })}
+                      className="w-12 h-12 p-1 rounded-lg border-none"
+                    />
+                    <Input 
+                      type="text" 
+                      value={qrState.labelColor || '#000000'}
+                      onChange={(e) => updateState({ labelColor: e.target.value })}
+                      className="flex-1 rounded-xl h-12"
+                    />
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>

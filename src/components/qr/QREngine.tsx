@@ -34,6 +34,8 @@ export interface QRState {
   dotsGradient: boolean;
   dotsGradientColor: string;
   image?: string;
+  labelText?: string;
+  labelColor?: string;
 }
 
 interface QREngineProps {
@@ -127,7 +129,17 @@ export default function QREngine({ state }: QREngineProps) {
 
   return (
     <div className="flex flex-col items-center gap-6 p-6 bg-white dark:bg-zinc-900 rounded-3xl shadow-sm border border-zinc-200 dark:border-zinc-800">
-      <div ref={ref} className="qr-container overflow-hidden rounded-xl border border-zinc-100 dark:border-zinc-800 shadow-inner p-4 bg-white" />
+      <div className="flex flex-col items-center gap-4">
+        <div ref={ref} className="qr-container overflow-hidden rounded-xl border border-zinc-100 dark:border-zinc-800 shadow-inner p-4 bg-white" />
+        {state.labelText && (
+          <div 
+            className="text-center font-bold text-xl px-2 break-words max-w-[300px]"
+            style={{ color: state.labelColor || (state.dotsGradient ? state.dotsColor : state.dotsColor) }}
+          >
+            {state.labelText}
+          </div>
+        )}
+      </div>
       
       <div className="flex flex-wrap gap-2 justify-center w-full">
         <Button onClick={() => onDownloadClick('png')} className="flex-1 min-w-[80px]" variant="outline">

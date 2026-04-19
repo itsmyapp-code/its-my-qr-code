@@ -11,11 +11,21 @@ export const metadata: Metadata = {
   title: "Its My QR Code - Fast, Private QR Code Generator",
   description: "A 100% zero-backend QR code generator. Create stunning, customizable QR codes completely offline and securely in your browser.",
   manifest: "/manifest.json",
-  themeColor: "#ffffff",
+  themeColor: "#000000",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
     title: "Its My QR Code",
+  },
+  icons: {
+    icon: [
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
 };
 

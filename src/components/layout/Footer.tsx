@@ -8,7 +8,7 @@ export function Footer() {
         <div>
           <h3 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-4">{COMPLIANCE_CONSTANTS.PROJECT_NAME}</h3>
           <p className="mb-4">The zero-backend, browser-only QR Code generation tool. Fast, private, and secure.</p>
-          <p>&copy; {new Date().getFullYear()} {COMPLIANCE_CONSTANTS.PROJECT_NAME}. All rights reserved.</p>
+          <p>&copy; 2026 ItsMyApp.co.uk | All rights reserved support is: {COMPLIANCE_CONSTANTS.CONTACT_EMAIL}</p>
         </div>
         <div>
           <h3 className="font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Legal & Compliance</h3>
