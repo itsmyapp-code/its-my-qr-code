@@ -7,11 +7,14 @@ import { CookieBanner } from "@/components/layout/CookieBanner";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export const viewport = {
+  themeColor: "#000000",
+};
+
 export const metadata: Metadata = {
   title: "Its My QR Code - Fast, Private QR Code Generator",
   description: "A 100% zero-backend QR code generator. Create stunning, customizable QR codes completely offline and securely in your browser.",
   manifest: "/manifest.json",
-  themeColor: "#000000",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
