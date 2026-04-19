@@ -123,9 +123,9 @@ Watch your QR code update in real-time in the **Live Preview** pane. Once you ar
 
 export const TESTIMONIALS = [
   {
-    name: "Alex Sterling",
-    role: "Graphic Designer",
-    content: "The best browser-only QR generator I've used. The SVG export is crystal clear for my print work. 5/5 stars!",
+    name: "Martin",
+    role: "Designer",
+    content: "The best browser-only QR generator I've used. I can't believe this is free. 5/5 stars!",
     stars: 5
   },
   {
@@ -134,10 +134,4 @@ export const TESTIMONIALS = [
     content: "I love that my WiFi passwords never leave my computer. Private, fast, and beautiful UI. Highly recommend.",
     stars: 5
   },
-  {
-    name: "Mark Thompson",
-    role: "Tech Consultant",
-    content: "Zero-backend is exactly what I was looking for. No trackers, no nonsense. Just pure utility.",
-    stars: 4
-  }
 ];
