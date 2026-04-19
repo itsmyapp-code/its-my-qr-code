@@ -1,0 +1,21 @@
+{
+  "name": "Its My QR Code",
+  "short_name": "ItsMyQR",
+  "description": "Privacy-first, zero-backend QR code generator.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/its my qr code.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/its my qr code.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
