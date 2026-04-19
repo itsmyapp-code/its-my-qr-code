@@ -8,12 +8,13 @@ export function NavBar() {
         <div className="py-4 border-b border-zinc-900/10 lg:px-8 lg:border-0 dark:border-zinc-300/10 px-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 group">
             <div className="bg-white p-0 rounded-lg group-hover:scale-105 transition-transform overflow-hidden w-10 h-10 flex items-center justify-center">
-              <img src="/its my qr code.png" alt="Its My QR Code Logo" className="w-full h-full object-contain" />
+              <img src="/itsmyapp_logo.png" alt="Its My QR Code Logo" className="w-full h-full object-contain" />
             </div>
             <span className="font-bold text-xl tracking-tight">Its My QR Code</span>
           </Link>
-          <div className="flex items-center gap-4 text-sm font-medium">
-            <Link href="/" className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors">Generator</Link>
+          <div className="flex items-center gap-6 text-sm font-medium">
+            <Link href="/#generator" className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors">Generator</Link>
+            <Link href="/help" className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors">User Guide & Help</Link>
           </div>
         </div>
       </div>
