@@ -4,6 +4,7 @@ import "./globals.css";
 import { NavBar } from "@/components/layout/NavBar";
 import { Footer } from "@/components/layout/Footer";
 import { CookieBanner } from "@/components/layout/CookieBanner";
+import { FeedbackWidget } from "@/components/layout/FeedbackWidget";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -45,6 +46,7 @@ export default function RootLayout({
           {children}
         </div>
         <Footer />
+        <FeedbackWidget />
         <CookieBanner />
       </body>
     </html>
