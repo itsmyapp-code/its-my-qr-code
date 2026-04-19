@@ -143,14 +143,7 @@ export default function QREngine({ state }: QREngineProps) {
 
       const dataUrl = await domtoimage.toPng(containerRef.current, {
         bgcolor: state.backgroundColor,
-        quality: 1.0,
-        height: containerRef.current.offsetHeight * 2,
-        width: containerRef.current.offsetWidth * 2,
-        style: {
-          transform: 'scale(2)',
-          transformOrigin: 'top left'
-        },
-        filter
+        quality: 1.0
       });
 
       if (extension === 'png' || extension === 'jpeg' || extension === 'webp') {
@@ -190,9 +183,14 @@ export default function QREngine({ state }: QREngineProps) {
         pdf.addImage(dataUrl, 'PNG', x, y, width, height);
         pdf.save(`qrcode-${Date.now()}.pdf`);
       } else if (extension === 'svg') {
-        // For SVG, the library's own SVG is better quality, 
-        // but it won't have the label. For now, fallback to library SVG.
-        qrCode.download({ extension: 'svg' });
+        // Capture as SVG data URL including the label
+        const svgDataUrl = await domtoimage.toSvg(containerRef.current, {
+          bgcolor: state.backgroundColor
+        });
+        const link = document.createElement('a');
+        link.download = `qrcode-${Date.now()}.svg`;
+        link.href = svgDataUrl;
+        link.click();
       }
     } catch (err) {
       console.error('Export failed:', err);
