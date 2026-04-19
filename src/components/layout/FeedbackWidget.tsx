@@ -7,6 +7,7 @@ import { COMPLIANCE_CONSTANTS } from '@/lib/compliance';
 export function FeedbackWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [stars, setStars] = useState(5);
+  const [name, setName] = useState('');
   const [comment, setComment] = useState('');
   const [hoveredStar, setHoveredStar] = useState(0);
 
@@ -14,7 +15,7 @@ export function FeedbackWidget() {
     e.preventDefault();
     
     const subject = encodeURIComponent(`App Rating: ${stars} Stars - Its My QR Code`);
-    const body = encodeURIComponent(`Rating: ${stars}/5\n\nComment:\n${comment}\n\n---\nSent from the Its My QR Code Feedback Widget`);
+    const body = encodeURIComponent(`From: ${name}\nRating: ${stars}/5\n\nComment:\n${comment}\n\n---\nSent from the Its My QR Code Feedback Widget`);
     
     window.location.href = `mailto:${COMPLIANCE_CONSTANTS.CONTACT_EMAIL}?subject=${subject}&body=${body}`;
     setIsOpen(false);
@@ -63,6 +64,18 @@ export function FeedbackWidget() {
                   </button>
                 ))}
               </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-zinc-500 mb-3">Your Name</label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Full name"
+                className="w-full p-4 rounded-xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-white transition-all text-sm"
+                required
+              />
             </div>
 
             <div>
