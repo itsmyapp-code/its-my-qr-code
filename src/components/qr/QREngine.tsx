@@ -11,6 +11,8 @@ import QRCodeStyling, {
   CornerDotType,
   Options
 } from 'qr-code-styling';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 type Extension = 'svg' | 'png' | 'jpeg' | 'webp' | 'pdf';
 
@@ -70,6 +72,7 @@ export default function QREngine({ state }: QREngineProps) {
   });
 
   const ref = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (qrCode && ref.current) {
@@ -119,17 +122,53 @@ export default function QREngine({ state }: QREngineProps) {
     }
   }, [qrCode, state]);
 
-  const onDownloadClick = (extension: any) => {
-    if (qrCode) {
-      qrCode.download({
-        extension: extension
+  const onDownloadClick = async (extension: Extension) => {
+    if (!qrCode || !containerRef.current) return;
+
+    // If there's no label, we can use the library's built-in download
+    if (!state.labelText) {
+      qrCode.download({ extension });
+      return;
+    }
+
+    // If there IS a label, we need to capture the container
+    try {
+      const canvas = await html2canvas(containerRef.current, {
+        backgroundColor: state.backgroundColor,
+        scale: 3, // High resolution
+        logging: false,
+        useCORS: true
       });
+
+      if (extension === 'png' || extension === 'jpeg' || extension === 'webp') {
+        const link = document.createElement('a');
+        link.download = `qrcode-${Date.now()}.${extension}`;
+        link.href = canvas.toDataURL(`image/${extension}`);
+        link.click();
+      } else if (extension === 'pdf') {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF({
+          orientation: canvas.width > canvas.height ? 'l' : 'p',
+          unit: 'px',
+          format: [canvas.width, canvas.height]
+        });
+        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+        pdf.save(`qrcode-${Date.now()}.pdf`);
+      } else if (extension === 'svg') {
+        // SVG with text is complex to capture from canvas, 
+        // fallback to standard QR if it's SVG for now, or just PNG
+        qrCode.download({ extension });
+      }
+    } catch (err) {
+      console.error('Export failed:', err);
+      // Fallback
+      qrCode.download({ extension });
     }
   };
 
   return (
     <div className="flex flex-col items-center gap-6 p-6 bg-white dark:bg-zinc-900 rounded-3xl shadow-sm border border-zinc-200 dark:border-zinc-800">
-      <div className="flex flex-col items-center gap-4">
+      <div ref={containerRef} className="flex flex-col items-center gap-4 p-4" style={{ backgroundColor: state.backgroundColor }}>
         <div ref={ref} className="qr-container overflow-hidden rounded-xl border border-zinc-100 dark:border-zinc-800 shadow-inner p-4 bg-white" />
         {state.labelText && (
           <div 
