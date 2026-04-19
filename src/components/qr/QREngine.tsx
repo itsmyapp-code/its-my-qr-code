@@ -11,7 +11,7 @@ import QRCodeStyling, {
   CornerDotType,
   Options
 } from 'qr-code-styling';
-import html2canvas from 'html2canvas';
+import domtoimage from 'dom-to-image';
 import jsPDF from 'jspdf';
 
 type Extension = 'svg' | 'png' | 'jpeg' | 'webp' | 'pdf';
@@ -135,31 +135,40 @@ export default function QREngine({ state }: QREngineProps) {
 
     // If there IS a label or it's a PDF, we use our custom capture logic
     try {
-      const canvas = await html2canvas(containerRef.current, {
-        backgroundColor: state.backgroundColor,
-        scale: 3, // High resolution for professional print
-        logging: false,
-        useCORS: true,
-        allowTaint: true
+      // domtoimage is generally more robust for modern CSS than html2canvas
+      const filter = (node: Node) => {
+        // Exclude UI buttons if they somehow got in the ref, but here they are outside
+        return true;
+      };
+
+      const dataUrl = await domtoimage.toPng(containerRef.current, {
+        bgcolor: state.backgroundColor,
+        quality: 1.0,
+        height: containerRef.current.offsetHeight * 2,
+        width: containerRef.current.offsetWidth * 2,
+        style: {
+          transform: 'scale(2)',
+          transformOrigin: 'top left'
+        },
+        filter
       });
 
       if (extension === 'png' || extension === 'jpeg' || extension === 'webp') {
         const link = document.createElement('a');
         link.download = `qrcode-${Date.now()}.${extension}`;
-        link.href = canvas.toDataURL(`image/${extension}`);
+        link.href = dataUrl;
         link.click();
       } else if (extension === 'pdf') {
-        const imgData = canvas.toDataURL('image/png');
         const pdf = new jsPDF({
-          orientation: canvas.width > canvas.height ? 'l' : 'p',
+          orientation: containerRef.current.offsetWidth > containerRef.current.offsetHeight ? 'l' : 'p',
           unit: 'px',
-          format: [canvas.width, canvas.height]
+          format: [containerRef.current.offsetWidth * 2, containerRef.current.offsetHeight * 2]
         });
-        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+        pdf.addImage(dataUrl, 'PNG', 0, 0, containerRef.current.offsetWidth * 2, containerRef.current.offsetHeight * 2);
         pdf.save(`qrcode-${Date.now()}.pdf`);
       } else if (extension === 'svg') {
-        // Fallback for SVG if label present - SVG to Canvas to SVG is lossy, 
-        // so we just download the QR as SVG for now
+        // For SVG, the library's own SVG is better quality, 
+        // but it won't have the label. For now, fallback to library SVG.
         qrCode.download({ extension: 'svg' });
       }
     } catch (err) {
